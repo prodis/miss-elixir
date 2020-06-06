@@ -8,6 +8,34 @@ defmodule Miss.KernelTest do
 
   doctest Subject
 
+  describe "div_rem/2" do
+    test "returns the division result and the remainder" do
+      assert Subject.div_rem(5, 2) == {2, 1}
+      assert Subject.div_rem(6, -4) == {-1, 2}
+      assert Subject.div_rem(-99, 2) == {-49, -1}
+      assert Subject.div_rem(10, 5) == {2, 0}
+      assert Subject.div_rem(0, 2) == {0, 0}
+    end
+
+    test "when the divisor is zero, raises an ArithmeticError" do
+      assert_raise ArithmeticError, fn ->
+        Subject.div_rem(2, 0)
+      end
+    end
+
+    test "when the dividend is not an integer, raises an ArithmeticError" do
+      assert_raise ArithmeticError, fn ->
+        Subject.div_rem(10.0, 2)
+      end
+    end
+
+    test "when the divisor is not an integer, raises an ArithmeticError" do
+      assert_raise ArithmeticError, fn ->
+        Subject.div_rem(10, 2.0)
+      end
+    end
+  end
+
   describe "struct_list/2" do
     setup do
       default_structs = [

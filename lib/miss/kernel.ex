@@ -1,7 +1,47 @@
 defmodule Miss.Kernel do
   @moduledoc """
-  Functions to extend Elixir `Kernel` module.
+  Functions to extend the Elixir `Kernel` module.
   """
+
+  @doc """
+  Performs an integer division and computes the remainder.
+
+  `Miss.Kernel.div_rem/2` uses truncated division, which means:
+  - the result of the division is always rounded towards zero
+  - the remainder will always have the sign of the `dividend`
+
+  Raises an `ArithmeticError` if one of the arguments is not an integer, or when the `divisor` is
+  `0`.
+
+  ## Examples
+
+      iex> Miss.Kernel.div_rem(5, 2)
+      {2, 1}
+
+      iex> Miss.Kernel.div_rem(6, -4)
+      {-1, 2}
+
+      iex> Miss.Kernel.div_rem(-99, 2)
+      {-49, -1}
+
+      iex> Miss.Kernel.div_rem(10, 5)
+      {2, 0}
+
+      iex> Miss.Kernel.div_rem(0, 2)
+      {0, 0}
+
+      iex> Miss.Kernel.div_rem(5, 0)
+      ** (ArithmeticError) bad argument in arithmetic expression
+
+      iex> Miss.Kernel.div_rem(10.0, 2)
+      ** (ArithmeticError) bad argument in arithmetic expression
+
+      iex> Miss.Kernel.div_rem(10, 2.0)
+      ** (ArithmeticError) bad argument in arithmetic expression
+
+  """
+  @spec div_rem(integer(), neg_integer() | pos_integer()) :: {integer(), integer()}
+  def div_rem(dividend, divisor), do: {div(dividend, divisor), rem(dividend, divisor)}
 
   @doc """
   Creates a list of structs similar to `Kernel.struct/2`.
