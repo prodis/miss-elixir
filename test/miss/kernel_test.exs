@@ -101,4 +101,92 @@ defmodule Miss.KernelTest do
       assert Subject.struct_list(User, []) == []
     end
   end
+
+  describe "struct_list!/2" do
+    setup do
+      default_structs = [
+        struct(User),
+        struct(User)
+      ]
+
+      structs = [
+        %User{name: "Akira"},
+        %User{name: "Fernando"}
+      ]
+
+      {:ok, default_structs: default_structs, structs: structs}
+    end
+
+    test "when a list of maps is given, returns a list of structs", %{
+      structs: expected_structs
+    } do
+      list = [
+        %{name: "Akira"},
+        %{name: "Fernando"}
+      ]
+
+      assert Subject.struct_list!(User, list) == expected_structs
+    end
+
+    test "when a list of keywords is given, returns a list of structs", %{
+      structs: expected_structs
+    } do
+      list = [
+        [name: "Akira"],
+        [name: "Fernando"]
+      ]
+
+      assert Subject.struct_list!(User, list) == expected_structs
+    end
+
+    test "when using an existing struct, returns a list of structs", %{
+      structs: expected_structs
+    } do
+      user = %User{name: "Other"}
+
+      list = [
+        %{name: "Akira"},
+        %{name: "Fernando"}
+      ]
+
+      assert Subject.struct_list!(user, list) == expected_structs
+    end
+
+    test "when some of the given keys are not present in the struct, raises a KeyError" do
+      list = [
+        %{name: "Akira", last_name: "Hamasaki"},
+        %{name: "Fernando", last_name: "Hamasaki"}
+      ]
+
+      assert_raise KeyError, fn ->
+        Subject.struct_list!(User, list)
+      end
+    end
+
+    test "when the given keys are not present in the struct, raises a KeyError" do
+      list = [
+        %{first_name: "Akira"},
+        %{last_name: "Hamasaki"}
+      ]
+
+      assert_raise KeyError, fn ->
+        Subject.struct_list!(User, list)
+      end
+    end
+
+    test "when a list of maps is given with string keys, raises a KeyError" do
+      list = [
+        %{"name" => "Akira"},
+        %{"name" => "Fernando"}
+      ]
+
+      assert_raise KeyError, fn ->
+        Subject.struct_list!(User, list)
+      end
+    end
+
+    test "when a empty list is given, returns an empty list" do
+      assert Subject.struct_list!(User, []) == []
+    end
+  end
 end

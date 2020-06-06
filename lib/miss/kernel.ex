@@ -89,4 +89,70 @@ defmodule Miss.Kernel do
   """
   @spec struct_list(module() | struct(), [Enum.t()]) :: [struct()]
   def struct_list(struct, list), do: Enum.map(list, &struct(struct, &1))
+
+  @doc """
+  Creates a list of structs similar to `Miss.Kernel.struct_list/2`, but checks for key
+  validity emulating the compile time behaviour of structs.
+
+  ## Examples
+
+      defmodule User do
+        defstruct name: "User"
+      end
+
+      # Using a list of maps
+      iex> Miss.Kernel.struct_list!(User, [
+      ...>   %{name: "Akira"},
+      ...>   %{name: "Fernando"}
+      ...> ])
+      [
+        %User{name: "Akira"},
+        %User{name: "Fernando"}
+      ]
+
+      # Using a list of keywords
+      iex> Miss.Kernel.struct_list!(User, [
+      ...>   [name: "Akira"],
+      ...>   [name: "Fernando"]
+      ...> ])
+      [
+        %User{name: "Akira"},
+        %User{name: "Fernando"}
+      ]
+
+      # Using an existing struct
+      iex> user = %User{name: "Other"}
+      ...> Miss.Kernel.struct_list!(user, [
+      ...>   %{name: "Akira"},
+      ...>   %{name: "Fernando"}
+      ...> ])
+      [
+        %User{name: "Akira"},
+        %User{name: "Fernando"}
+      ]
+
+      # Known keys are used and unknown keys are ignored
+      iex> Miss.Kernel.struct_list!(User, [
+      ...>   %{name: "Akira", last_name: "Hamasaki"},
+      ...>   %{name: "Fernando", last_name: "Hamasaki"}
+      ...> ])
+      ** (KeyError) key :last_name not found in: %Miss.KernelTest.User{name: "User"}
+
+      # Unknown keys are ignored
+      iex> Miss.Kernel.struct_list!(User, [
+      ...>   %{first_name: "Akira"},
+      ...>   %{last_name: "Hamasaki"}
+      ...> ])
+      ** (KeyError) key :first_name not found in: %Miss.KernelTest.User{name: "User"}
+
+      # String keys are ignored
+      iex> Miss.Kernel.struct_list!(User, [
+      ...>   %{"name" => "Akira"},
+      ...>   %{"name" => "Fernando"}
+      ...> ])
+      ** (KeyError) key "name" not found in: %Miss.KernelTest.User{name: "User"}
+
+  """
+  @spec struct_list!(module() | struct(), [Enum.t()]) :: [struct()]
+  def struct_list!(struct, list), do: Enum.map(list, &struct!(struct, &1))
 end
