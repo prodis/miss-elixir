@@ -36,6 +36,64 @@ defmodule Miss.KernelTest do
     end
   end
 
+  describe "struct_inverse/2" do
+    setup do
+      default_struct = struct(User)
+      struct = %User{name: "Fernando"}
+
+      {:ok, default_struct: default_struct, struct: struct}
+    end
+
+    test "creates a struct", %{struct: expected_struct} do
+      assert Subject.struct_inverse(%{name: "Fernando"}, User) == expected_struct
+      assert Subject.struct_inverse([name: "Fernando"], User) == expected_struct
+    end
+
+    test "updates a struct", %{struct: expected_struct} do
+      struct = %User{name: "Akira"}
+      fields = %{name: "Fernando"}
+
+      assert Subject.struct_inverse(fields, struct) == expected_struct
+    end
+
+    test "when some of the given keys are not present in the struct, " <>
+           "ignores the unknown keys and creates the struct",
+         %{
+           struct: expected_struct
+         } do
+      fields = %{name: "Fernando", last_name: "Hamasaki"}
+
+      assert Subject.struct_inverse(fields, User) == expected_struct
+    end
+
+    test "when the given keys are not present in the struct, " <>
+           "ignores the unknown keys and creates a default struct",
+         %{
+           default_struct: expected_struct
+         } do
+      fields = %{last_name: "Hamasaki"}
+
+      assert Subject.struct_inverse(fields, User) == expected_struct
+    end
+
+    test "when a map is given with string keys, " <>
+           "ignores the string keys and creates a default struct",
+         %{
+           default_struct: expected_struct
+         } do
+      fields = %{"name" => "Akira"}
+
+      assert Subject.struct_inverse(fields, User) == expected_struct
+    end
+
+    test "when the given fields are empty, creates a default struct", %{
+      default_struct: expected_struct
+    } do
+      assert Subject.struct_inverse(%{}, User) == expected_struct
+      assert Subject.struct_inverse([], User) == expected_struct
+    end
+  end
+
   describe "struct_list/2" do
     setup do
       default_structs = [
@@ -76,14 +134,14 @@ defmodule Miss.KernelTest do
     test "when using an existing struct, returns a list of structs", %{
       structs: expected_structs
     } do
-      user = %User{name: "Other"}
+      struct = %User{name: "Other"}
 
       list = [
         %{name: "Akira"},
         %{name: "Fernando"}
       ]
 
-      assert Subject.struct_list(user, list) == expected_structs
+      assert Subject.struct_list(struct, list) == expected_structs
     end
 
     test "when some of the given keys are not present in the struct, " <>
@@ -170,14 +228,14 @@ defmodule Miss.KernelTest do
     test "when using an existing struct, returns a list of structs", %{
       structs: expected_structs
     } do
-      user = %User{name: "Other"}
+      struct = %User{name: "Other"}
 
       list = [
         %{name: "Akira"},
         %{name: "Fernando"}
       ]
 
-      assert Subject.struct_list!(user, list) == expected_structs
+      assert Subject.struct_list!(struct, list) == expected_structs
     end
 
     test "when some of the given keys are not present in the struct, raises a KeyError" do

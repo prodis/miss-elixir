@@ -44,6 +44,76 @@ defmodule Miss.Kernel do
   def div_rem(dividend, divisor), do: {div(dividend, divisor), rem(dividend, divisor)}
 
   @doc """
+  Creates and updates a struct in the same way of `Kernel.struct/2`, but receiving the parameters
+  in the inverse order, first the `fields` and second the `struct`.
+
+  Useful when building the fields using the pipe operator `|>`.
+
+  In the following example, a hypothetical function `build/2` builds a `Map` to create a
+  `MyStruct` struct.
+
+  Using `Kernel.struct/2` is necessary to assign the map to a variable before creating the struct:
+
+      def build(param1, param2) do
+        fields =
+          %{
+            key1: param1.one,
+            key2: param1.two,
+            key3: :a_default_value
+          }
+          |> Map.merge(build_more_fields(param2))
+
+        struct(MyStruct, fields)
+      end
+
+  Using `Miss.Kernel.struct_inverse/2` the map can be piped when creating the struct:
+
+      def build(param1, param2) do
+        %{
+          key1: param1.one,
+          key2: param1.two,
+          key3: :a_default_value
+        }
+        |> Map.merge(build_more_fields(param2))
+        |> Miss.Kernel.struct_inverse(MyStruct)
+      end
+
+  ## Examples
+
+      defmodule User do
+        defstruct name: "User"
+      end
+
+      # Using a map
+      iex> Miss.Kernel.struct_inverse(%{name: "Akira"}, User)
+      %User{name: "Akira"}
+
+      # Using keywords
+      iex> Miss.Kernel.struct_inverse([name: "Akira"], User)
+      %User{name: "Akira"}
+
+      # Updating an existing struct
+      iex> user = %User{name: "Other"}
+      ...> Miss.Kernel.struct_inverse(%{name: "Akira"}, user)
+      %User{name: "Akira"}
+
+      # Known keys are used and unknown keys are ignored
+      iex> Miss.Kernel.struct_inverse(%{name: "Akira", last_name: "Hamasaki"}, User)
+      %User{name: "Akira"}
+
+      # Unknown keys are ignored
+      iex> Miss.Kernel.struct_inverse(%{last_name: "Hamasaki"}, User)
+      %User{name: "User"}
+
+      # String keys are ignored
+      iex> Miss.Kernel.struct_inverse(%{"name" => "Akira"}, User)
+      %User{name: "User"}
+
+  """
+  @spec struct_inverse(Enum.t(), module() | struct()) :: struct()
+  def struct_inverse(fields, struct), do: struct(struct, fields)
+
+  @doc """
   Creates a list of structs similar to `Kernel.struct/2`.
 
   In the same way that `Kernel.struct/2`, the `struct` argument may be an atom (which defines
