@@ -109,9 +109,52 @@ defmodule Miss.Kernel do
       iex> Miss.Kernel.struct_inverse(%{"name" => "Akira"}, User)
       %User{name: "User"}
 
+      # Using empty fields
+      iex> Miss.Kernel.struct_inverse(%{}, User)
+      %User{name: "User"}
+
   """
   @spec struct_inverse(Enum.t(), module() | struct()) :: struct()
   def struct_inverse(fields, struct), do: struct(struct, fields)
+
+  @doc """
+  Similar to `Miss.Kernel.struct_inverse/2` but checks for key validity emulating the compile time
+  behaviour of structs.
+
+  ## Examples
+
+      defmodule User do
+        defstruct name: "User"
+      end
+
+      # Using a map
+      iex> Miss.Kernel.struct_inverse!(%{name: "Akira"}, User)
+      %User{name: "Akira"}
+
+      # Using keywords
+      iex> Miss.Kernel.struct_inverse!([name: "Akira"], User)
+      %User{name: "Akira"}
+
+      # Updating an existing struct
+      iex> user = %User{name: "Other"}
+      ...> Miss.Kernel.struct_inverse!(%{name: "Akira"}, user)
+      %User{name: "Akira"}
+
+      # Unknown keys raises KeyError
+      iex> Miss.Kernel.struct_inverse!(%{name: "Akira", last_name: "Hamasaki"}, User)
+      ** (KeyError) key :last_name not found in: %Miss.KernelTest.User{name: "User"}
+
+      # String keys raises KeyError
+      iex> Miss.Kernel.struct_inverse!(%{"name" => "Akira"}, User)
+      ** (KeyError) key "name" not found in: %Miss.KernelTest.User{name: "User"}
+
+      # Using empty fields
+      iex> Miss.Kernel.struct_inverse!(%{}, User)
+      %User{name: "User"}
+
+  """
+  @spec struct_inverse!(Enum.t(), module() | struct()) :: struct()
+  def struct_inverse!(fields, struct), do: struct!(struct, fields)
 
   @doc """
   Creates a list of structs similar to `Kernel.struct/2`.
@@ -241,21 +284,14 @@ defmodule Miss.Kernel do
         %User{name: "Fernando"}
       ]
 
-      # Known keys are used and unknown keys are ignored
+      # Unknown keys raises KeyError
       iex> Miss.Kernel.struct_list!(User, [
       ...>   %{name: "Akira", last_name: "Hamasaki"},
       ...>   %{name: "Fernando", last_name: "Hamasaki"}
       ...> ])
       ** (KeyError) key :last_name not found in: %Miss.KernelTest.User{name: "User"}
 
-      # Unknown keys are ignored
-      iex> Miss.Kernel.struct_list!(User, [
-      ...>   %{first_name: "Akira"},
-      ...>   %{last_name: "Hamasaki"}
-      ...> ])
-      ** (KeyError) key :first_name not found in: %Miss.KernelTest.User{name: "User"}
-
-      # String keys are ignored
+      # String keys raises KeyError
       iex> Miss.Kernel.struct_list!(User, [
       ...>   %{"name" => "Akira"},
       ...>   %{"name" => "Fernando"}

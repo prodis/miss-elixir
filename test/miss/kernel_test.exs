@@ -94,6 +94,60 @@ defmodule Miss.KernelTest do
     end
   end
 
+  describe "struct_inverse!/2" do
+    setup do
+      struct = %User{name: "Fernando"}
+
+      {:ok, struct: struct}
+    end
+
+    test "creates a struct", %{struct: expected_struct} do
+      assert Subject.struct_inverse!(%{name: "Fernando"}, User) == expected_struct
+      assert Subject.struct_inverse!([name: "Fernando"], User) == expected_struct
+    end
+
+    test "updates a struct", %{struct: expected_struct} do
+      struct = %User{name: "Akira"}
+      fields = %{name: "Fernando"}
+
+      assert Subject.struct_inverse!(fields, struct) == expected_struct
+    end
+
+    test "when some of the given keys are not present in the struct, " <>
+           "ignores the unknown keys and creates the struct" do
+      fields = %{name: "Fernando", last_name: "Hamasaki"}
+
+      assert_raise KeyError, fn ->
+        Subject.struct_inverse!(fields, User)
+      end
+    end
+
+    test "when the given keys are not present in the struct, " <>
+           "ignores the unknown keys and creates a default struct" do
+      fields = %{last_name: "Hamasaki"}
+
+      assert_raise KeyError, fn ->
+        Subject.struct_inverse!(fields, User)
+      end
+    end
+
+    test "when a map is given with string keys, " <>
+           "ignores the string keys and creates a default struct" do
+      fields = %{"name" => "Akira"}
+
+      assert_raise KeyError, fn ->
+        Subject.struct_inverse!(fields, User)
+      end
+    end
+
+    test "when the given fields are empty, creates a default struct" do
+      expected_struct = struct(User)
+
+      assert Subject.struct_inverse!(%{}, User) == expected_struct
+      assert Subject.struct_inverse!([], User) == expected_struct
+    end
+  end
+
   describe "struct_list/2" do
     setup do
       default_structs = [
@@ -190,17 +244,12 @@ defmodule Miss.KernelTest do
 
   describe "struct_list!/2" do
     setup do
-      default_structs = [
-        struct(User),
-        struct(User)
-      ]
-
       structs = [
         %User{name: "Akira"},
         %User{name: "Fernando"}
       ]
 
-      {:ok, default_structs: default_structs, structs: structs}
+      {:ok, structs: structs}
     end
 
     test "when a list of maps is given, returns a list of structs", %{
