@@ -36,6 +36,55 @@ defmodule Miss.KernelTest do
     end
   end
 
+  describe "charlist?/1" do
+    @types_and_values [
+      atom: :prodis,
+      boolean: true,
+      float: 123.45,
+      integer: 123,
+      string: "prodis"
+    ]
+
+    test "when a charlist is given, returns true" do
+      assert Subject.charlist?('prodis') == true
+      assert Subject.charlist?('córação dê mélão') == true
+      assert Subject.charlist?('') == true
+    end
+
+    test "when a list of integers that represent Unicode code points is given, returns true" do
+      assert Subject.charlist?([0, 55_295]) == true
+      assert Subject.charlist?([57_344, 1_114_111]) == true
+    end
+
+    test "when a list of integers that does not represent Unicode code points is given, returns false" do
+      assert Subject.charlist?([1_114_112]) == false
+      assert Subject.charlist?([1_999_999]) == false
+      assert Subject.charlist?([1_114_113, 1_114_114]) == false
+    end
+
+    test "when a list of integers that represent Unicode for UTF-16 is given, returns false" do
+      assert Subject.charlist?([55_296]) == false
+      assert Subject.charlist?([57_343]) == false
+      assert Subject.charlist?([55_297, 57_342]) == false
+    end
+
+    test "when a list of negative integers is given, returns false" do
+      assert Subject.charlist?([-1, -1]) == false
+    end
+
+    for {type, value} <- @types_and_values do
+      test "when a #{type} is given, returns false" do
+        assert Subject.charlist?(unquote(value)) == false
+      end
+    end
+
+    for {type, value} when type != :integer <- @types_and_values do
+      test "when a list of #{type}s is given, returns false" do
+        assert Subject.charlist?([unquote(value), unquote(value)]) == false
+      end
+    end
+  end
+
   describe "struct_inverse/2" do
     setup do
       default_struct = struct(User)

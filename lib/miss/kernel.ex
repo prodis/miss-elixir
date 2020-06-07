@@ -44,11 +44,65 @@ defmodule Miss.Kernel do
   def div_rem(dividend, divisor), do: {div(dividend, divisor), rem(dividend, divisor)}
 
   @doc """
+  Returns `true` if `term` is a charlist. Otherwise returns `false`.
+
+  A charlist is a list made of non-negative integers, where each integer represents a Unicode code
+  point. These integers must:
+  * be within the range `0..0x10FFFF` (`0..1_114_111`);
+  * and be out of the range `0xD800..0xDFFF` (`55_296..57_343`), which is reserved in Unicode for
+  UTF-16 surrogate pairs.
+
+  Elixir uses single quotes to define charlists:
+
+      'córação dê mélão'
+      [99, 243, 114, 97, 231, 227, 111, 32, 100, 234, 32, 109, 233, 108, 227, 111]
+
+  Check the [Elixir Charlists documentation](https://hexdocs.pm/elixir/List.html#module-charlists)
+  for more details.
+
+  `Miss.Kernel.charlist?/1` CANNOT be used as a guard.
+
+  ## Examples
+
+      iex> Miss.Kernel.charlist?('prodis')
+      true
+
+      iex> Miss.Kernel.charlist?([112, 114, 111, 100, 105, 115])
+      true
+
+      iex> Miss.Kernel.charlist?([112, 114, 111, 100, 105, 115, 55_296])
+      false
+
+      iex> Miss.Kernel.charlist?("prodis")
+      false
+
+      iex> Miss.Kernel.charlist?(:prodis)
+      false
+
+      iex> Miss.Kernel.charlist?(true)
+      false
+
+      iex> Miss.Kernel.charlist?(123)
+      false
+
+      iex> Miss.Kernel.charlist?(123.45)
+      false
+
+  """
+  @spec charlist?(term()) :: boolean()
+  def charlist?(term) when is_list(term) do
+    Enum.all?(term, fn item ->
+      item in 0..55_295 or item in 57_344..1_114_111
+    end)
+  end
+
+  def charlist?(_term), do: false
+
+  @doc """
   Creates and updates a struct in the same way of `Kernel.struct/2`, but receiving the parameters
   in the inverse order, first the `fields` and second the `struct`.
 
   Useful when building the fields using the pipe operator `|>`.
-
   In the following example, a hypothetical function `build/2` builds a `Map` to create a
   `MyStruct` struct.
 
