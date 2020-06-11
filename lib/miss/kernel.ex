@@ -60,7 +60,7 @@ defmodule Miss.Kernel do
   Check the [Elixir Charlists documentation](https://hexdocs.pm/elixir/List.html#module-charlists)
   for more details.
 
-  `Miss.Kernel.charlist?/1` CANNOT be used as a guard.
+  Note that `Miss.Kernel.charlist?/1` CANNOT be used as a guard.
 
   ## Examples
 
