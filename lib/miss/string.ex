@@ -16,7 +16,8 @@ defmodule Miss.String do
   See the [Elixir IO Data documentation](https://hexdocs.pm/elixir/IO.html#module-io-data) for
   more information.
 
-  All elements in the list must be convertible to a binary, otherwise an error is raised.
+  All elements in the list must be a binary or convertible to a binary, otherwise an error is
+  raised.
 
   ## Examples
 
@@ -44,6 +45,9 @@ defmodule Miss.String do
   @doc """
   Builds a string with the given two values using IO lists similar to `Miss.String.build/1`.
 
+  When both values are binary, `#{inspect(__MODULE__)}.build/2` is more efficient than
+  `Miss.String.build/1` because it avoids to check if each value is a binary.
+
   ## Examples
 
       iex> Miss.String.build("akira", "hamasaki")
@@ -57,13 +61,18 @@ defmodule Miss.String do
 
   """
   @spec build(term(), term()) :: String.t()
-  def build(value1, value2) when is_binary(value1) and is_binary(value2),
-    do: IO.iodata_to_binary([value1, value2])
+  def build(value1, value2)
+      when is_binary(value1) and
+             is_binary(value2),
+      do: IO.iodata_to_binary([value1, value2])
 
   def build(value1, value2), do: build([value1, value2])
 
   @doc """
   Builds a string with the given three values using IO lists similar to `Miss.String.build/1`.
+
+  When all the values are binary, `#{inspect(__MODULE__)}.build/3` is more efficient than
+  `Miss.String.build/1` because it avoids to check if each value is a binary.
 
   ## Examples
 
@@ -79,13 +88,18 @@ defmodule Miss.String do
   """
   @spec build(term(), term(), term()) :: String.t()
   def build(value1, value2, value3)
-      when is_binary(value1) and is_binary(value2) and is_binary(value3),
+      when is_binary(value1) and
+             is_binary(value2) and
+             is_binary(value3),
       do: IO.iodata_to_binary([value1, value2, value3])
 
   def build(value1, value2, value3), do: build([value1, value2, value3])
 
   @doc """
   Builds a string with the given four values using IO lists similar to `Miss.String.build/1`.
+
+  When all the values are binary, `#{inspect(__MODULE__)}.build/4` is more efficient than
+  `Miss.String.build/1` because it avoids to check if each value is a binary.
 
   ## Examples
 
@@ -101,13 +115,19 @@ defmodule Miss.String do
   """
   @spec build(term(), term(), term(), term()) :: String.t()
   def build(value1, value2, value3, value4)
-      when is_binary(value1) and is_binary(value2) and is_binary(value3) and is_binary(value4),
+      when is_binary(value1) and
+             is_binary(value2) and
+             is_binary(value3) and
+             is_binary(value4),
       do: IO.iodata_to_binary([value1, value2, value3, value4])
 
   def build(value1, value2, value3, value4), do: build([value1, value2, value3, value4])
 
   @doc """
   Builds a string with the given five values using IO lists similar to `Miss.String.build/1`.
+
+  When all the values are binary, `#{inspect(__MODULE__)}.build/5` is more efficient than
+  `Miss.String.build/1` because it avoids to check if each value is a binary.
 
   ## Examples
 
