@@ -7,6 +7,33 @@ defmodule Miss.Map do
   @typep map_to_list :: [{Map.key(), Map.value()}]
 
   @doc """
+  Gets the value for a specific `key` in `map`.
+
+  If `key` is present in `map`, the corresponding value is returned. Otherwise, a `KeyError` is
+  raised.
+
+  `Miss.Map.get!/2` is similar to `Map.fetch!/2` but more efficient. Using pattern matching is the
+  fastest way to access maps. `Miss.Map.get!/2` uses pattern matching, but `Map.fetch!/2` not.
+
+  ## Examples
+
+      iex> Miss.Map.get!(%{a: 1, b: 2}, :a)
+      1
+
+      iex> Miss.Map.get!(%{a: 1, b: 2}, :c)
+      ** (KeyError) key :c not found in: %{a: 1, b: 2}
+
+  """
+  @spec get!(map(), Map.key()) :: Map.value()
+  def get!(map, key) do
+    case map do
+      %{^key => value} -> value
+      %{} -> :erlang.error({:badkey, key, map})
+      non_map -> :erlang.error({:badmap, non_map})
+    end
+  end
+
+  @doc """
   Renames a single key in the given `map`.
 
   If `actual_key` does not exist in `map`, it is simply ignored.

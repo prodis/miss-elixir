@@ -21,6 +21,26 @@ defmodule Miss.MapTest do
     {:ok, map_atom_keys: map_atom_keys, map_string_keys: map_string_keys}
   end
 
+  describe "get!/2" do
+    test "returns the value", %{map_atom_keys: map} do
+      assert Subject.get!(map, :key1) == "one"
+      assert Subject.get!(map, :key2) == 222
+      assert Subject.get!(map, :key3) == 'tree'
+    end
+
+    test "when the key is not present, raises a KeyError", %{map_atom_keys: map} do
+      assert_raise KeyError, "key :not_exist not found in: #{inspect(map)}", fn ->
+        Subject.get!(map, :not_exist)
+      end
+    end
+
+    test "when a map is not given, raises a BadMapError" do
+      assert_raise BadMapError, "expected a map, got: [a: 1, b: 2]", fn ->
+        Subject.get!([a: 1, b: 2], :key1)
+      end
+    end
+  end
+
   describe "rename_key/3" do
     test "renames atom key", %{map_atom_keys: map} do
       assert Subject.rename_key(map, :key1, :key_one) == %{
@@ -88,8 +108,8 @@ defmodule Miss.MapTest do
     end
 
     test "when a map is not given, raises a BadMapError" do
-      assert_raise BadMapError, fn ->
-        Subject.rename_key("not a map", :key1, :one)
+      assert_raise BadMapError, "expected a map, got: [a: 1, b: 2]", fn ->
+        Subject.rename_key([a: 1, b: 2], :key1, :one)
       end
     end
   end
@@ -268,8 +288,8 @@ defmodule Miss.MapTest do
     end
 
     test "when a map is not given, raises a BadMapError" do
-      assert_raise BadMapError, fn ->
-        Subject.rename_keys("not a map", key1: :one)
+      assert_raise BadMapError, "expected a map, got: [a: 1, b: 2]", fn ->
+        Subject.rename_keys([a: 1, b: 2], key1: :one)
       end
     end
   end
