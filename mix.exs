@@ -61,6 +61,7 @@ defmodule Miss.MixProject do
     [
       main: "readme",
       extras: ["README.md", "CHANGELOG.md"],
+      logo: "misc/miss-elixir-logo.jpg",
       source_ref: "v#{@version}",
       source_url: @github_url,
       canonical: "http://hexdocs.pm/miss"

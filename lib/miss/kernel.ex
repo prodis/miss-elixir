@@ -4,53 +4,13 @@ defmodule Miss.Kernel do
   """
 
   @doc """
-  Performs an integer division and computes the remainder.
-
-  `Miss.Kernel.div_rem/2` uses truncated division, which means:
-  - the result of the division is always rounded towards zero
-  - the remainder will always have the sign of the `dividend`
-
-  Raises an `ArithmeticError` if one of the arguments is not an integer, or when the `divisor` is
-  `0`.
-
-  ## Examples
-
-      iex> Miss.Kernel.div_rem(5, 2)
-      {2, 1}
-
-      iex> Miss.Kernel.div_rem(6, -4)
-      {-1, 2}
-
-      iex> Miss.Kernel.div_rem(-99, 2)
-      {-49, -1}
-
-      iex> Miss.Kernel.div_rem(10, 5)
-      {2, 0}
-
-      iex> Miss.Kernel.div_rem(0, 2)
-      {0, 0}
-
-      iex> Miss.Kernel.div_rem(5, 0)
-      ** (ArithmeticError) bad argument in arithmetic expression
-
-      iex> Miss.Kernel.div_rem(10.0, 2)
-      ** (ArithmeticError) bad argument in arithmetic expression
-
-      iex> Miss.Kernel.div_rem(10, 2.0)
-      ** (ArithmeticError) bad argument in arithmetic expression
-
-  """
-  @spec div_rem(integer(), neg_integer() | pos_integer()) :: {integer(), integer()}
-  def div_rem(dividend, divisor), do: {div(dividend, divisor), rem(dividend, divisor)}
-
-  @doc """
   Returns `true` if `term` is a charlist. Otherwise returns `false`.
 
   A charlist is a list made of non-negative integers, where each integer represents a Unicode code
-  point. These integers must:
-  * be within the range `0..0x10FFFF` (`0..1_114_111`);
-  * and be out of the range `0xD800..0xDFFF` (`55_296..57_343`), which is reserved in Unicode for
-  UTF-16 surrogate pairs.
+  point. These integers must be:
+  - within the range `0..0x10FFFF` (`0..1_114_111`);
+  - out of the range `0xD800..0xDFFF` (`55_296..57_343`), which is reserved in Unicode for UTF-16
+  surrogate pairs.
 
   Elixir uses single quotes to define charlists:
 
@@ -99,10 +59,50 @@ defmodule Miss.Kernel do
   def charlist?(_term), do: false
 
   @doc """
-  Creates and updates a struct in the same way of `Kernel.struct/2`, but receiving the parameters
-  in the inverse order, first the `fields` and second the `struct`.
+  Performs an integer division and computes the remainder.
 
-  Useful when building the fields using the pipe operator `|>`.
+  `Miss.Kernel.div_rem/2` uses truncated division, which means:
+  - the result of the division is always rounded towards zero;
+  - the remainder will always have the sign of the `dividend`.
+
+  Raises an `ArithmeticError` if one of the arguments is not an integer, or when the `divisor` is
+  `0`.
+
+  ## Examples
+
+      iex> Miss.Kernel.div_rem(5, 2)
+      {2, 1}
+
+      iex> Miss.Kernel.div_rem(6, -4)
+      {-1, 2}
+
+      iex> Miss.Kernel.div_rem(-99, 2)
+      {-49, -1}
+
+      iex> Miss.Kernel.div_rem(10, 5)
+      {2, 0}
+
+      iex> Miss.Kernel.div_rem(0, 2)
+      {0, 0}
+
+      iex> Miss.Kernel.div_rem(5, 0)
+      ** (ArithmeticError) bad argument in arithmetic expression
+
+      iex> Miss.Kernel.div_rem(10.0, 2)
+      ** (ArithmeticError) bad argument in arithmetic expression
+
+      iex> Miss.Kernel.div_rem(10, 2.0)
+      ** (ArithmeticError) bad argument in arithmetic expression
+
+  """
+  @spec div_rem(integer(), neg_integer() | pos_integer()) :: {integer(), integer()}
+  def div_rem(dividend, divisor), do: {div(dividend, divisor), rem(dividend, divisor)}
+
+  @doc """
+  Creates and updates a struct in the same way of `Kernel.struct/2`, but receiving the parameters
+  in the inverse order, first the `fields` and second the `struct`.  Useful when building the
+  fields using the pipe operator `|>`.
+
   In the following example, a hypothetical function `build/2` builds a `Map` to create a
   `MyStruct` struct.
 
@@ -221,7 +221,7 @@ defmodule Miss.Kernel do
 
   Keys in the `Enumerable` that do not exist in the struct are automatically discarded. Note that
   keys must be atoms, as only atoms are allowed when defining a struct. If keys in the
-  `Enumerable` are duplicated, the last entry will be taken (same behaviour as `Map.new/1`).
+  `Enumerable` are duplicated, the last entry will be taken (the same behaviour as `Map.new/1`).
 
   This function is useful for dynamically creating a list of structs, as well as for converting a
   list of maps to a list of structs.

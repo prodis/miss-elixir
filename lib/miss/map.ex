@@ -78,7 +78,7 @@ defmodule Miss.Map do
   If `keys_to_rename` contains keys that are not in `map`, they are simply ignored.
 
   It is not recommended to use `#{inspect(__MODULE__)}.rename_keys/2` to rename keys to existing
-  keys. But if you do, after renaming the keys, duplicate keys are removed and the value of the
+  keys. But if you do it, after renaming the keys, duplicate keys are removed and the value of the
   preceding one prevails. See the examples for more details.
 
   ## Examples
