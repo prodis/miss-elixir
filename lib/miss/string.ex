@@ -28,7 +28,7 @@ defmodule Miss.String do
       "akirahamasaki123pim2010-09-0199.99"
 
       iex> Miss.String.build(["akira", %{}])
-      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
+      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Decimal, Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
 
   """
   @spec build(list()) :: String.t()
@@ -57,7 +57,7 @@ defmodule Miss.String do
       "akirahamasaki"
 
       iex> Miss.String.build("akira", %{})
-      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
+      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Decimal, Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
 
   """
   @spec build(term(), term()) :: String.t()
@@ -83,7 +83,7 @@ defmodule Miss.String do
       "akirahamasaki123"
 
       iex> Miss.String.build("akira", "hamasaki", %{})
-      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
+      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Decimal, Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
 
   """
   @spec build(term(), term(), term()) :: String.t()
@@ -110,7 +110,7 @@ defmodule Miss.String do
       "akirahamasaki123pim"
 
       iex> Miss.String.build("akira", "hamasaki", "123", %{})
-      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
+      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Decimal, Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
 
   """
   @spec build(term(), term(), term(), term()) :: String.t()
@@ -138,7 +138,7 @@ defmodule Miss.String do
       "akirahamasaki123pim2010-09-01"
 
       iex> Miss.String.build("akira", "hamasaki", "123", "pim", %{})
-      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
+      ** (Protocol.UndefinedError) protocol String.Chars not implemented for %{} of type Map. This protocol is implemented for the following type(s): Decimal, Float, DateTime, Time, List, Version.Requirement, Atom, Integer, Version, Date, BitString, NaiveDateTime, URI
 
   """
   @spec build(term(), term(), term(), term(), term()) :: String.t()
