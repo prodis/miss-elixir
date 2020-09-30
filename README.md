@@ -47,8 +47,8 @@ Kernel.div_rem(10, 2)
 Miss.Kernel.div_rem(10, 2)
 ```
 
-Navigate in the [documentation of each module](https://hexdocs.pm/miss/api-reference.html) to find
-out all the available functions and detailed examples.
+> Navigate in the [documentation of each module](https://hexdocs.pm/miss/api-reference.html) to
+> find out all the available functions and detailed examples.
 
 Below there are some examples.
 
@@ -68,8 +68,45 @@ iex> Miss.String.build("What ", "do you", " miss?")
 iex> Miss.Map.rename_key(%{a: 1, b: 2, c: 3}, :b, :bbb)
 %{a: 1, bbb: 2, c: 3}
 
-iex> Miss.Map.rename_keys(%{a: 1, b: 2, c: 3}, %{a: :aaa, c: :ccc})
- %{aaa: 1, b: 2, ccc: 3}
+iex> defmodule Post do
+...>   defstruct [:title, :text, :date, comments: []]
+...>  end
+...>
+...>  defmodule Author do
+...>    defstruct [:id, :name]
+...>  end
+...>
+...>  defmodule Comment do
+...>    defstruct [:text]
+...>  end
+...>
+...> post = %Post{
+...>   title: "My post",
+...>   text: "Something really interesting",
+...>   date: ~D[2010-09-01],
+...>   author: %Author{
+...>     id: 1234,
+...>     name: "Pedro Bonamides"
+...>   },
+...>   comments: [
+...>     %Comment{text: "Comment one"},
+...>     %Comment{text: "Comment two"}
+...>   ]
+...> }
+...> Miss.Map.from_nested_struct(post, [{Date, :skip}])
+%{
+  title: "My post",
+  text: "Something really interesting",
+  date: ~D[2010-09-01],
+  author: %{
+    id: 1234,
+    name: "Pedro Bonamides"
+  },
+  comments: [
+    %{text: "Comment one"},
+    %{text: "Comment two"}
+  ]
+}
 ```
 
 ### Kernel

@@ -19,11 +19,11 @@ defmodule Miss.Map do
   transformation function.
 
   `Date` or `Decimal` values are common examples where their map representation could be not so
-  useful when converted in a nested struct. See the examples for more details.
+  useful when converted to a map. See the examples for more details.
 
   ## Examples
 
-  Given the following structs:
+      # Given the following structs
 
       defmodule Post do
         defstruct [:title, :text, :date, :author, comments: []]
@@ -41,29 +41,28 @@ defmodule Miss.Map do
         defstruct [:atom, :boolean, :decimal, :float, :integer]
       end
 
-      post = %Post{
-        title: "My post",
-        text: "Something really interesting",
-        date: ~D[2010-09-01],
-        author: %Author{
-          name: "Pedro Bonamides",
-          metadata: %Metadata{
-            atom: :my_atom,
-            boolean: true,
-            decimal: Decimal.new("456.78"),
-            float: 987.54,
-            integer: 2_345_678
-          }
-        },
-        comments: [
-          %Comment{text: "Comment one"},
-          %Comment{text: "Comment two"}
-        ]
-      }
+      # Convert all nested structs including the Date and Decimal values:
 
-  Convert all nested structs (including the `Date` and `Decimal` values):
-
-      #{inspect(__MODULE__)}.from_nested_struct(post)
+      iex> post = %Post{
+      ...>   title: "My post",
+      ...>   text: "Something really interesting",
+      ...>   date: ~D[2010-09-01],
+      ...>   author: %Author{
+      ...>     name: "Pedro Bonamides",
+      ...>     metadata: %Metadata{
+      ...>       atom: :my_atom,
+      ...>       boolean: true,
+      ...>       decimal: Decimal.new("456.78"),
+      ...>       float: 987.54,
+      ...>       integer: 2_345_678
+      ...>     }
+      ...>   },
+      ...>   comments: [
+      ...>     %Comment{text: "Comment one"},
+      ...>     %Comment{text: "Comment two"}
+      ...>   ]
+      ...> }
+      ...> #{inspect(__MODULE__)}.from_nested_struct(post)
       %{
         title: "My post",
         text: "Something really interesting",
@@ -74,6 +73,48 @@ defmodule Miss.Map do
             atom: :my_atom,
             boolean: true,
             decimal: %{coef: 45678, exp: -2, sign: 1}
+            float: 987.54,
+            integer: 2_345_678
+          }
+        },
+        comments: [
+          %{text: "Comment one"},
+          %{text: "Comment two"}
+        ]
+      }
+
+      # Convert all nested structs skipping the Date values and transforming Decimal values to string:
+
+      iex> post = %Post{
+      ...>   title: "My post",
+      ...>   text: "Something really interesting",
+      ...>   date: ~D[2010-09-01],
+      ...>   author: %Author{
+      ...>     name: "Pedro Bonamides",
+      ...>     metadata: %Metadata{
+      ...>       atom: :my_atom,
+      ...>       boolean: true,
+      ...>       decimal: Decimal.new("456.78"),
+      ...>       float: 987.54,
+      ...>       integer: 2_345_678
+      ...>     }
+      ...>   },
+      ...>   comments: [
+      ...>     %Comment{text: "Comment one"},
+      ...>     %Comment{text: "Comment two"}
+      ...>   ]
+      ...> }
+      ...> #{inspect(__MODULE__)}.from_nested_struct(post, [{Date, :skip}, {Decimal, &to_string/1}])
+      %{
+        title: "My post",
+        text: "Something really interesting",
+        date: ~D[2010-09-01],
+        author: %{
+          name: "Pedro Bonamides",
+          metadata: %{
+            atom: :my_atom,
+            boolean: true,
+            decimal: "456.78",
             float: 987.54,
             integer: 2_345_678
           }
