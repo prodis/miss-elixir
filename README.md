@@ -6,11 +6,11 @@ Some functions that ***I miss*** in Elixir core (and maybe you too).
 
 ---
 
-[![Hex.pm](https://img.shields.io/hexpm/v/miss-elixir.svg)](https://hex.pm/packages/miss)
+[![Hex.pm](https://img.shields.io/hexpm/v/miss.svg)](https://hex.pm/packages/miss)
 [![Docs](https://img.shields.io/badge/hex-docs-542581.svg)](https://hexdocs.pm/miss)
 [![Build Status](https://travis-ci.org/prodis/miss-elixir.svg?branch=master)](https://travis-ci.org/prodis/miss-elixir)
 [![Coverage Status](https://coveralls.io/repos/github/prodis/miss-elixir/badge.svg?branch=master)](https://coveralls.io/github/prodis/miss-elixir?branch=master)
-[![License](https://img.shields.io/hexpm/l/miss-elixir.svg)](https://github.com/prodis/miss-elixir/blob/master/LICENSE)
+[![License](https://img.shields.io/hexpm/l/miss.svg)](https://github.com/prodis/miss-elixir/blob/master/LICENSE)
 
 *Miss Elixir* library brings in a non-intrusive way some extra functions that, for different
 reasons, are not part of the Elixir core.
