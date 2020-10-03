@@ -4,7 +4,7 @@ defmodule Miss.MixProject do
   @app :miss
   @name "Miss Elixir"
   @repo "https://github.com/prodis/miss-elixir"
-  @version "0.0.0"
+  @version "0.1.0"
 
   def project do
     [
