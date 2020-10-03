@@ -1,28 +1,25 @@
 defmodule Miss.MixProject do
   use Mix.Project
 
+  @app :miss
+  @name "Miss Elixir"
+  @repo "https://github.com/prodis/miss-elixir"
   @version "0.0.0"
-  @github_url "https://github.com/prodis/miss-elixir"
 
   def project do
     [
-      app: :miss,
-      name: "Miss Elixir",
+      app: @app,
+      name: @name,
       version: @version,
-      elixir: "~> 1.9",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: dialyzer(),
       description: description(),
-      package: package(),
       docs: docs(),
-      test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.html": :test
-      ]
+      package: package(),
+      preferred_cli_env: preferred_cli_env(),
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -30,42 +27,59 @@ defmodule Miss.MixProject do
 
   defp deps do
     [
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:decimal, "~> 1.8", only: :test},
+      # Development
+      {:credo, "~> 1.4", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0.0", only: :dev, runtime: false},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
+
+      # Test
+      {:decimal, "~> 2.0", only: :test},
       {:excoveralls, "~> 0.12", only: :test}
     ]
   end
 
   defp description do
     """
-    UNDER DEVELOPMENT
+    Some functions that I miss in Elixir core (and maybe you too).
+
+    Miss Elixir brings in a non-intrusive way some extra functions that, for different reasons,
+    are not part of the Elixir core.
     """
   end
 
   defp dialyzer do
     [
-      ignore_warnings: "dialyzer.ignore"
-    ]
-  end
-
-  defp package do
-    [
-      maintainers: ["Fernando Hamasaki de Amorim"],
-      licenses: ["Apache 2.0"],
-      links: %{"GitHub" => @github_url}
+      plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
     ]
   end
 
   defp docs() do
     [
       main: "readme",
-      extras: ["README.md", "CHANGELOG.md"],
+      extras: ~w(README.md CHANGELOG.md),
       logo: "misc/miss-elixir-logo.jpg",
-      source_ref: "v#{@version}",
-      source_url: @github_url,
+      source_ref: @version,
+      source_url: @repo,
       canonical: "http://hexdocs.pm/miss"
+    ]
+  end
+
+  defp package do
+    [
+      files: ~w(lib mix.exs README.md CHANGELOG.md LICENSE),
+      maintainers: ["Fernando Hamasaki de Amorim"],
+      licenses: ["Apache 2.0"],
+      links: %{"GitHub" => @repo}
+    ]
+  end
+
+  defp preferred_cli_env do
+    [
+      coveralls: :test,
+      "coveralls.detail": :test,
+      "coveralls.post": :test,
+      "coveralls.html": :test,
+      "coveralls.travis": :test
     ]
   end
 end

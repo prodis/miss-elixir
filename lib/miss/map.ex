@@ -213,7 +213,7 @@ defmodule Miss.Map do
       %{a: 3, b: 2}
 
   """
-  @spec rename_key(map(), May.key(), Map.key()) :: map()
+  @spec rename_key(map(), Map.key(), Map.key()) :: map()
   def rename_key(map, actual_key, new_key) when is_map(map) do
     case :maps.take(actual_key, map) do
       {value, new_map} -> :maps.put(new_key, value, new_map)
