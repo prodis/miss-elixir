@@ -2,7 +2,7 @@
 
 Some functions that ***I miss*** in Elixir core (and maybe you too).
 
-<img height="300" src="https://raw.githubusercontent.com/prodis/miss-elixir/master/misc/miss-elixir-logo.jpg" alt="Miss Elixir">
+<img height="300" src="https://raw.githubusercontent.com/prodis/miss-elixir/master/assets/miss-elixir-logo.png" alt="Miss Elixir">
 
 ---
 
