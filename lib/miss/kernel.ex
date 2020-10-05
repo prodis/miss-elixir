@@ -106,7 +106,8 @@ defmodule Miss.Kernel do
   In the following example, a hypothetical function `build/2` builds a `Map` to create a
   `MyStruct` struct.
 
-  Using `Kernel.struct/2` is necessary to assign the map to a variable before creating the struct:
+  Using `Kernel.struct/2` it is necessary to assign the map to a variable before creating the
+  struct:
 
       def build(param1, param2) do
         fields =

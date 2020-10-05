@@ -2,7 +2,7 @@
 
 Some functions that ***I miss*** in Elixir core (and maybe you too).
 
-<img height="300" src="https://raw.githubusercontent.com/prodis/miss-elixir/docs/misc/miss-elixir-logo.jpg" alt="Miss Elixir">
+<img height="300" src="https://raw.githubusercontent.com/prodis/miss-elixir/master/misc/miss-elixir-logo.jpg" alt="Miss Elixir">
 
 ---
 
@@ -12,11 +12,12 @@ Some functions that ***I miss*** in Elixir core (and maybe you too).
 [![Coverage Status](https://coveralls.io/repos/github/prodis/miss-elixir/badge.svg?branch=master)](https://coveralls.io/github/prodis/miss-elixir?branch=master)
 [![License](https://img.shields.io/hexpm/l/miss.svg)](https://github.com/prodis/miss-elixir/blob/master/LICENSE)
 
-*Miss Elixir* library brings in a non-intrusive way some extra functions that, for different
-reasons, are not part of the Elixir core.
+*Miss Elixir* library brings in a non-intrusive way some extra functions that, for different reasons, are not part of the Elixir
+core.
 
-None of the functions in *Miss Elixir* has the same name of functions present in the correspondent
-Elixir module.
+None of the functions in *Miss Elixir* has the same name of functions present in the correspondent Elixir module.
+
+Read about the motivation to create this Elixir library in [this blog post](https://fernandohamasaki.com/miss-elixir).
 
 ## Installation
 
@@ -32,11 +33,11 @@ end
 
 ## Usage
 
-The order of the `Miss` namespace preceding the existing Elixir modules to be extended was made by
-intention. For example, `Miss.String`.
+The order of the `Miss` namespace preceding the existing Elixir modules to be extended was made by intention. For example,
+`Miss.String`.
 
-The modules in *Miss Elixir* are not intended to be used with aliases. Always use the entire
-namespace to make explicit that module/function does not belong to Elixir core.
+The modules in *Miss Elixir* are not intended to be used with aliases. Always use the entire namespace to make explicit that
+module/function does not belong to Elixir core.
 
 ```elixir
 # Do not do that!
@@ -47,8 +48,8 @@ Kernel.div_rem(10, 2)
 Miss.Kernel.div_rem(10, 2)
 ```
 
-> Navigate in the [documentation of each module](https://hexdocs.pm/miss/api-reference.html) to
-> find out all the available functions and detailed examples.
+> Navigate in the [documentation of each module](https://hexdocs.pm/miss/api-reference.html) to find out all the available
+> functions and detailed examples.
 
 Below there are some examples.
 
@@ -69,7 +70,7 @@ iex> Miss.Map.rename_key(%{a: 1, b: 2, c: 3}, :b, :bbb)
 %{a: 1, bbb: 2, c: 3}
 
 iex> defmodule Post do
-...>   defstruct [:title, :text, :date, comments: []]
+...>   defstruct [:title, :text, :date, :author, comments: []]
 ...>  end
 ...>
 ...>  defmodule Author do
@@ -140,8 +141,7 @@ See the [contributing guide](https://github.com/prodis/miss-elixir/blob/master/C
 
 ## License
 
-*Miss Elixir* is released under the Apache 2.0 License. See the
-[LICENSE](https://github.com/prodis/miss-elixir/blob/master/LICENSE) file.
+*Miss Elixir* is released under the Apache 2.0 License. See the [LICENSE](https://github.com/prodis/miss-elixir/blob/master/LICENSE) file.
 
 Copyright © 2020 Fernando Hamasaki de Amorim
 
@@ -149,4 +149,4 @@ Copyright © 2020 Fernando Hamasaki de Amorim
 
 [Fernando Hamasaki de Amorim (prodis)](https://github.com/prodis)
 
-![Prodis Logo](https://camo.githubusercontent.com/c01a3ebca1c000d7586a998bb07316c8cb784ce5/687474703a2f2f70726f6469732e6e65742e62722f696d616765732f70726f6469735f3135302e676966)
+![Prodis](https://camo.githubusercontent.com/c01a3ebca1c000d7586a998bb07316c8cb784ce5/687474703a2f2f70726f6469732e6e65742e62722f696d616765732f70726f6469735f3135302e676966)

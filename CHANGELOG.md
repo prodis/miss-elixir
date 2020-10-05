@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Changed
+- Update documentation.
 
 ## [0.1.0] - 2020-10-03
 ### Added
