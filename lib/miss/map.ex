@@ -72,7 +72,7 @@ defmodule Miss.Map do
           metadata: %{
             atom: :my_atom,
             boolean: true,
-            decimal: %{coef: 45678, exp: -2, sign: 1}
+            decimal: %{coef: 45678, exp: -2, sign: 1},
             float: 987.54,
             integer: 2_345_678
           }
