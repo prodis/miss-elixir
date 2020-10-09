@@ -1,8 +1,8 @@
 # Miss Elixir
 
-Some functions that ***I miss*** in Elixir core (and maybe you too).
+Some functions that ***I miss*** in Elixir standard library (and maybe you too).
 
-<img height="300" src="https://raw.githubusercontent.com/prodis/miss-elixir/master/assets/miss-elixir-logo.png" alt="Miss Elixir">
+<img height="300" src="https://raw.githubusercontent.com/prodis/miss-elixir/master/assets/miss-elixir-logo.jpg" alt="Miss Elixir">
 
 ---
 
@@ -13,7 +13,7 @@ Some functions that ***I miss*** in Elixir core (and maybe you too).
 [![License](https://img.shields.io/hexpm/l/miss.svg)](https://github.com/prodis/miss-elixir/blob/master/LICENSE)
 
 *Miss Elixir* library brings in a non-intrusive way some extra functions that, for different reasons, are not part of the Elixir
-core.
+standard library.
 
 None of the functions in *Miss Elixir* has the same name of functions present in the correspondent Elixir module.
 
@@ -37,7 +37,7 @@ The order of the `Miss` namespace preceding the existing Elixir modules to be ex
 `Miss.String`.
 
 The modules in *Miss Elixir* are not intended to be used with aliases. Always use the entire namespace to make explicit that
-module/function does not belong to Elixir core.
+module/function does not belong to Elixir standard library.
 
 ```elixir
 # Do not do that!
