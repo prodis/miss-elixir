@@ -6,8 +6,8 @@ For proposing new features, please start a discussion opening [an issue](https:/
 Describe the new feature, add scenarios and use cases for the new function/module, and provide
 some usage examples.
 
-Do not open a pull request with the proposed new feature. If you are proposing a new feature and
-you want to implement it, you can open a pull request after the new feature is approved. :smile:
+Do not open a pull request with the proposed new feature yet. If you are proposing a new feature
+and you want to implement it, you can open a pull request after the new feature is approved. :slightly_smiling_face:
 
 ## Bug fixes, documentation and code refactoring
 
