@@ -8,6 +8,12 @@ otp_release:
   - 22.0
   - 21.0
 
+jobs:
+  allow_failures:
+    - elixir: 1.11
+      otp_release: 21.0
+  fast_finish: true
+
 install:
   - mix local.hex --force
   - mix local.rebar --force
