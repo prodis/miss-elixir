@@ -3,9 +3,6 @@ defmodule Miss.MapTest do
 
   alias Miss.Map, as: Subject
 
-  # TODO: Fix doctest.
-  # doctest Subject
-
   # Structs also used in doctests.
   defmodule Post do
     defstruct [:title, :text, :date, :author, comments: []]
@@ -22,6 +19,8 @@ defmodule Miss.MapTest do
   defmodule Metadata do
     defstruct [:atom, :boolean, :decimal, :float, :integer]
   end
+
+  doctest Subject
 
   setup do
     map_atom_keys = %{

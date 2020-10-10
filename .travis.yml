@@ -1,11 +1,18 @@
 language: elixir
 
 elixir:
+  - 1.11
   - 1.10
 otp_release:
   - 23.0
   - 22.0
   - 21.0
+
+jobs:
+  allow_failures:
+    - elixir: 1.11
+      otp_release: 21.0
+  fast_finish: true
 
 install:
   - mix local.hex --force

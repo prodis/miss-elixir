@@ -40,10 +40,10 @@ defmodule Miss.MixProject do
 
   defp description do
     """
-    Some functions that I miss in Elixir core (and maybe you too).
+    Some functions that I miss in Elixir standard library (and maybe you too).
 
     Miss Elixir brings in a non-intrusive way some extra functions that, for different reasons,
-    are not part of the Elixir core.
+    are not part of the Elixir standard library.
     """
   end
 
@@ -53,7 +53,7 @@ defmodule Miss.MixProject do
     ]
   end
 
-  defp docs() do
+  defp docs do
     [
       main: "readme",
       extras: ~w(README.md CHANGELOG.md),
