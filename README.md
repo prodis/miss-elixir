@@ -26,7 +26,7 @@ The package can be installed by adding `miss` to your list of dependencies in `m
 ```elixir
 def deps do
   [
-    {:miss, "~> 0.1.3"}
+    {:miss, "~> 0.1.4"}
   ]
 end
 ```
