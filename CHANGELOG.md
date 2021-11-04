@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.3] - 2021-11-04
+
 ## [0.1.2] - 2020-10-10
 ### Changed
 - Update documentation and refactoring.
@@ -19,7 +21,8 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Not working version.
 
-[Unreleased]: https://github.com/prodis/miss-elixir/compare/0.1.2...master
+[Unreleased]: https://github.com/prodis/miss-elixir/compare/0.1.3...master
+[0.1.3]: https://github.com/prodis/miss-elixir/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/prodis/miss-elixir/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/prodis/miss-elixir/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/prodis/miss-elixir/compare/0.0.0...0.1.0
