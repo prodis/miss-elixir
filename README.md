@@ -143,10 +143,10 @@ See the [contributing guide](https://github.com/prodis/miss-elixir/blob/master/C
 
 *Miss Elixir* is released under the Apache 2.0 License. See the [LICENSE](https://github.com/prodis/miss-elixir/blob/master/LICENSE) file.
 
-Copyright © 2020 Fernando Hamasaki de Amorim
+Copyright © 2020-2021 Fernando Hamasaki de Amorim
 
 ## Author
 
 [Fernando Hamasaki de Amorim (prodis)](https://github.com/prodis)
 
-![Prodis](https://camo.githubusercontent.com/c01a3ebca1c000d7586a998bb07316c8cb784ce5/687474703a2f2f70726f6469732e6e65742e62722f696d616765732f70726f6469735f3135302e676966)
+![Prodis](https://raw.githubusercontent.com/prodis/prodis/master/prodis.png)
