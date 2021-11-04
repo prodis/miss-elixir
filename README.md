@@ -149,4 +149,4 @@ Copyright © 2020-2021 Fernando Hamasaki de Amorim
 
 [Fernando Hamasaki de Amorim (prodis)](https://github.com/prodis)
 
-![Prodis](https://raw.githubusercontent.com/prodis/prodis/master/prodis.png)
+<a href="https://fernandohamasaki.com" title="Prodis' Blog" target="_blank"><img height="102" width="151" src="https://raw.githubusercontent.com/prodis/prodis/master/prodis.png" alt="Prodis"></a>
