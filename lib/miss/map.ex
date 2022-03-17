@@ -38,7 +38,7 @@ defmodule Miss.Map do
       end
 
       defmodule Metadata do
-        defstruct [:atom, :boolean, :decimal, :float, :integer]
+        defstruct [:atom, :boolean, :decimal, :float, :integer, map: %{}]
       end
 
       # Convert all nested structs including the Date and Decimal values:
@@ -159,14 +159,16 @@ defmodule Miss.Map do
   defp to_map(value, _transform), do: value
 
   @spec to_nested_map(struct() | map(), transform()) :: map()
-  defp to_nested_map(value, transform) do
-    value
+  defp to_nested_map(struct_or_map, transform) do
+    struct_or_map
     |> Map.keys()
     |> Enum.reduce(%{}, fn key, map ->
-      value
-      |> Map.get(key)
-      |> to_map(transform)
-      |> then(&Map.put(map, key, &1))
+      value =
+        struct_or_map
+        |> Map.get(key)
+        |> to_map(transform)
+
+      Map.put(map, key, value)
     end)
   end
 
