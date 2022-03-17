@@ -38,7 +38,7 @@ defmodule Miss.Map do
       end
 
       defmodule Metadata do
-        defstruct [:atom, :boolean, :decimal, :float, :integer, map: %{}]
+        defstruct [:atom, :boolean, :decimal, :float, :integer, :map]
       end
 
       # Convert all nested structs including the Date and Decimal values:
@@ -54,7 +54,8 @@ defmodule Miss.Map do
       ...>       boolean: true,
       ...>       decimal: Decimal.new("456.78"),
       ...>       float: 987.54,
-      ...>       integer: 2_345_678
+      ...>       integer: 2_345_678,
+      ...>       map: %{key: "value"}
       ...>     }
       ...>   },
       ...>   comments: [
@@ -75,7 +76,7 @@ defmodule Miss.Map do
             decimal: %{coef: 45678, exp: -2, sign: 1},
             float: 987.54,
             integer: 2_345_678,
-            map: %{}
+            map: %{key: "value"}
           }
         },
         comments: [
@@ -97,7 +98,8 @@ defmodule Miss.Map do
       ...>       boolean: true,
       ...>       decimal: Decimal.new("456.78"),
       ...>       float: 987.54,
-      ...>       integer: 2_345_678
+      ...>       integer: 2_345_678,
+      ...>       map: %{key: "value"}
       ...>     }
       ...>   },
       ...>   comments: [
@@ -118,7 +120,7 @@ defmodule Miss.Map do
             decimal: "456.78",
             float: 987.54,
             integer: 2_345_678,
-            map: %{}
+            map: %{key: "value"}
           }
         },
         comments: [
@@ -158,17 +160,17 @@ defmodule Miss.Map do
 
   defp to_map(value, _transform), do: value
 
-  @spec to_nested_map(struct() | map(), transform()) :: map()
-  defp to_nested_map(struct_or_map, transform) do
-    struct_or_map
+  @spec to_nested_map(map(), transform()) :: map()
+  defp to_nested_map(map, transform) do
+    map
     |> Map.keys()
-    |> Enum.reduce(%{}, fn key, map ->
+    |> Enum.reduce(%{}, fn key, new_map ->
       value =
-        struct_or_map
+        map
         |> Map.get(key)
         |> to_map(transform)
 
-      Map.put(map, key, value)
+      Map.put(new_map, key, value)
     end)
   end
 

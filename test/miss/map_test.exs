@@ -17,7 +17,7 @@ defmodule Miss.MapTest do
   end
 
   defmodule Metadata do
-    defstruct [:atom, :boolean, :decimal, :float, :integer, map: %{}]
+    defstruct [:atom, :boolean, :decimal, :float, :integer, :map]
   end
 
   doctest Subject
@@ -53,7 +53,8 @@ defmodule Miss.MapTest do
             float: 987.54,
             integer: 2_345_678,
             map: %{
-              meta: %Comment{text: "Comment one"}
+              comment: %Comment{text: "Comment one"},
+              key: "value"
             }
           }
         },
@@ -80,7 +81,8 @@ defmodule Miss.MapTest do
             float: 987.54,
             integer: 2_345_678,
             map: %{
-              meta: %{text: "Comment one"}
+              comment: %{text: "Comment one"},
+              key: "value"
             }
           }
         },
@@ -110,7 +112,8 @@ defmodule Miss.MapTest do
             float: 987.54,
             integer: 2_345_678,
             map: %{
-              meta: "Comment one"
+              comment: "Comment one",
+              key: "value"
             }
           }
         },
@@ -144,7 +147,8 @@ defmodule Miss.MapTest do
             float: 987.54,
             integer: 2_345_678,
             map: %{
-              meta: %{text: "Comment one"}
+              comment: %{text: "Comment one"},
+              key: "value"
             }
           }
         },
