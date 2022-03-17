@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Changed
+- Update development dependencies.
+
+### Fixed
+- When a struct was nested into a map, that struct was not converted to map.
 
 ## [0.1.4] - 2021-11-04
 ### Changed
