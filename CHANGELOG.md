@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [0.1.5] - 2022-03-17
 ### Changed
 - Update development dependencies.
 
@@ -32,7 +34,8 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Not working version.
 
-[Unreleased]: https://github.com/prodis/miss-elixir/compare/0.1.4...master
+[Unreleased]: https://github.com/prodis/miss-elixir/compare/0.1.5...master
+[0.1.5]: https://github.com/prodis/miss-elixir/compare/0.1.4...0.1.5
 [0.1.4]: https://github.com/prodis/miss-elixir/compare/0.1.3...0.1.4
 [0.1.3]: https://github.com/prodis/miss-elixir/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/prodis/miss-elixir/compare/0.1.1...0.1.2
