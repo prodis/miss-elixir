@@ -38,7 +38,7 @@ defmodule Miss.Map do
       end
 
       defmodule Metadata do
-        defstruct [:atom, :boolean, :decimal, :float, :integer]
+        defstruct [:atom, :boolean, :decimal, :float, :integer, map: %{}]
       end
 
       # Convert all nested structs including the Date and Decimal values:
@@ -74,7 +74,8 @@ defmodule Miss.Map do
             boolean: true,
             decimal: %{coef: 45678, exp: -2, sign: 1},
             float: 987.54,
-            integer: 2_345_678
+            integer: 2_345_678,
+            map: %{}
           }
         },
         comments: [
@@ -116,7 +117,8 @@ defmodule Miss.Map do
             boolean: true,
             decimal: "456.78",
             float: 987.54,
-            integer: 2_345_678
+            integer: 2_345_678,
+            map: %{}
           }
         },
         comments: [
@@ -135,25 +137,34 @@ defmodule Miss.Map do
     transform
     |> Keyword.get(module)
     |> case do
-      nil -> to_nested_map(struct, transform)
-      fun when is_function(fun, 1) -> fun.(struct)
-      :skip -> struct
+      nil ->
+        struct
+        |> Map.from_struct()
+        |> to_nested_map(transform)
+
+      fun when is_function(fun, 1) ->
+        fun.(struct)
+
+      :skip ->
+        struct
     end
   end
+
+  defp to_map(value, transform) when is_map(value),
+    do: to_nested_map(value, transform)
 
   defp to_map(list, transform) when is_list(list),
     do: Enum.map(list, fn item -> to_map(item, transform) end)
 
   defp to_map(value, _transform), do: value
 
-  @spec to_nested_map(struct(), transform()) :: map()
-  defp to_nested_map(struct, transform) do
-    struct
-    |> Map.from_struct()
+  @spec to_nested_map(struct() | map(), transform()) :: map()
+  defp to_nested_map(struct_or_map, transform) do
+    struct_or_map
     |> Map.keys()
     |> Enum.reduce(%{}, fn key, map ->
       value =
-        struct
+        struct_or_map
         |> Map.get(key)
         |> to_map(transform)
 
